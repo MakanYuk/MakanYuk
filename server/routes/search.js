@@ -4,4 +4,4 @@ const { searchRestaurant } = require('../controllers/restaurantsController')
 
 searchRouter.get('/restaurants', searchRestaurant)
 
-module.exports = searchRouter
+module.exports = searchRouter;
