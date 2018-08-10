@@ -31,3 +31,15 @@ $(document).ready(function(){
        
     });
 });
+
+$(document).ready(function(){
+    $("#invitations-tab").click(function(){
+        axios.get("http://localhost:3000/")
+    })
+})
+
+$(document).ready(function(){
+    $("#attend").click(function(){
+        
+    })
+})
