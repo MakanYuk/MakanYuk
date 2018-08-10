@@ -1,6 +1,4 @@
 var express = require('express');
-var path = require('path');
-var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var cors = require('cors')
@@ -10,7 +8,6 @@ const mongoose = require('mongoose');
 mongoose.connect(`mongodb://${process.env.MLAB_USER}:${process.env.MLAB_PASS}@ds113692.mlab.com:13692/makanyuk`, { useNewUrlParser: true });
 
 let express = require('express');
-let favicon = require('static-favicon');
 let logger = require('morgan');
 let cookieParser = require('cookie-parser');
 
