@@ -34,6 +34,79 @@ MakanYuk
 
 ### Users
 
+#### Get All Users
+----
+  Create user with name email and password
+
+* **URL**
+
+  /users/
+
+* **Method:**
+
+  `GET`
+  
+*  **URL Params**
+
+   None
+
+* **Body Params**
+
+None
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ```json
+    {
+       "message": "users found!",
+       "data": [
+           {
+               "hostedMeals": 0,
+               "attendedMeals": 0,
+               "_id": "5b6d5046a7533f138a05af0b",
+               "name": "oi",
+               "email": "asdfasdf",
+               "password": "$2a$08$8CHiBwbkipHCmiPvveuxe.PASAUuqAVZ/q/5lsokXs6F5HXftNVgy",
+               "created_at": "2018-08-10T08:43:50.239Z",
+               "updated_at": "2018-08-10T08:44:33.575Z",
+               "__v": 0
+           },
+           {
+               "hostedMeals": 0,
+               "attendedMeals": 0,
+               "_id": "5b6d529d4143a2150d6fed4a",
+               "name": "eri",
+               "email": "joanlamrack@gmail.com",
+               "password": "$2a$08$cpTc0WZAFxm7Z9/x2w./r.KUE4wVwAoiQr9E48L9D6xpPwjHXXjU2",
+               "created_at": "2018-08-10T08:53:49.942Z",
+               "updated_at": "2018-08-10T08:53:49.942Z",
+               "__v": 0
+           }
+       ]
+    }
+    ```
+	If no data
+
+	```json
+    []
+    ```
+
+
+* **Sample Call:**
+
+  ```javascript
+    $.axios.get("/users")
+        .then(result => {
+            console.log(result)
+        })
+        .fail(err => {
+            console.log(err)
+        })
+  ```
+
+
 #### Create User
 ----
   Create user with name email and password
@@ -78,16 +151,19 @@ MakanYuk
 	If no data
 
 	```json
-    []
+    {
+       "message": "no users found!",
+       "data": []
+    }
     ```
 
 
 * **Sample Call:**
 
   ```javascript
-    $.axios.post("/users",{
-		name, password, email
-	})
+    $.axios.post("/users"{
+    name, password, email}
+    )
         .then(result => {
             console.log(result)
         })
