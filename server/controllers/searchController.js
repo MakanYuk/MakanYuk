@@ -20,13 +20,19 @@ const searchRestaurant = (req, res, next) => {
         })
             .then(response => res.status(200).json(
                 responseObj('success',
-                    response.data.map(
+                    response.data.restaurants.map(
                         resto => {
-                            id = resto.id,
-                                name = resto.name,
-                                address = resto.location.address
-                        }))))
-            .catch(err => res.status(500).json(err))
+                            return {
+                                id: resto.restaurant.id,
+                                name: resto.restaurant.name,
+                                address: resto.restaurant.location.address
+                            }
+                        }
+                    )
+                    // response.data.restaurants
+                )
+            ))
+            .catch(err => res.status(500).json(err.message))
     }
 }
 
@@ -40,7 +46,7 @@ const searchLocation = (req, res, next) => {
             "user-key": process.env.ZOMATO_KEY
         }
     })
-        .then(response => res.status(200).json(responseObj('success', response.data)))
+        .then(response => res.status(200).json(responseObj('success', { locationId: response.data.location_suggestions[0].entity_id, locationName: response.data.location_suggestions[0].title })))
         .catch(err => res.status(400).json(err))
 }
 
