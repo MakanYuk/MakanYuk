@@ -22,12 +22,10 @@ $(document).ready(function(){
 
     //log in manually
     $("#loginBtn").click(function(){
-        let name = $("#inputName").val();
         let email = $("#inputEmail").val();
         let password = $("#inputPassword").val();
 
         axios.post(`${base_url}/login`, {
-            name,
             email,
             password
          })
@@ -96,6 +94,31 @@ $(document).ready(function(){
         }
     });
    
+    $("#invitations-tab").click(function(){
+        axios.get(`${base_url}/meal_events`)
+        .then(function (response) {
+             console.log(response.data);
+        }).catch((err) => {
+            console.log('error');
+        });
+    })
+
+    $("#detail").click(function() {
+        axios.get(`${base_url}/weather`)
+        .then((result) => {
+            var forecast
+            result.data.forEach(day=>{
+                if(day.date == '2018-08-14') {
+                    forecast = day
+                }  
+            })
+            console.log(forecast);
+        }).catch((err) => {
+            console.log(err);
+            
+        });
+    })
+
 });
 
 
