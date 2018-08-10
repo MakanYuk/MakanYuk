@@ -8,7 +8,7 @@ class WeatherController {
       // console.log('---- berhasil', forecast.data)
       var data = []
       forecast.data.data.forEach(day=>{
-        data.push({date: day.valid_date, icon: day.weather.icon, code: day.weather.code, weather: day.weather.description})
+        data.push({date: new Date(day.valid_date), icon: day.weather.icon, code: day.weather.code, weather: day.weather.description})
       })
       // console.log(data);
       res.status(200).json({message: 'forecast successfully retrived', data: data})
