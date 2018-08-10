@@ -97,7 +97,7 @@ $(document).ready(function(){
             console.log("No Token")
         }
     });
-    
+   
 });
 
 
