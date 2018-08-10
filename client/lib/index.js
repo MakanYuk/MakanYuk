@@ -41,21 +41,24 @@ $(document).ready(function(){
     });
 
     $("#inputLocation").on('change',function(){
+        console.log('inputLocation')
         $( "#inputRestaurant option").remove();    
         let inputLocation = $("#inputLocation").val();
         axios.get(`${base_url}/search/location?q=${inputLocation}`)
             .then(function(response){
                 console.log(response)
                 axios.get(`${base_url}/search/restaurants?location=${response.data.data.locationId}`)
-                    .then(result)
-                        
+                    .then(result => {
+                        console.log(result)
                         $.each(result.data.data,function(){
                             $( "#inputRestaurant").append( `<option value="${this.id}">${this.name}, at <span>${this.address}</span></option>` );
-                        }); 
-            }
+                        });
+                    })
+                     
+            })
             .catch(function (error) {
                 console.log(error);
-            }));
+            });
 
     })
 
@@ -68,20 +71,18 @@ $(document).ready(function(){
             let inputDate               = $("#inputDate").val();
             let inputGuestLimit         = $("#inputGuestLimit").val();
             let inputPrice              = $("#inputPrice").val();
-            let inputLocation           = $("#inputLocation").val();
             let inputRestaurant         = $("#inputRestaurant").val();
             
             axios({
                 method: 'post',
-                url: `${base_url}/restaurants`,
+                url: `${base_url}/user/hosted_meals`,
                 data: {
-                    inputEventName,
-                    inputEventDescription,
-                    inputDate,
-                    inputGuestLimit,
-                    inputPrice,
-                    inputLocation,
-                    inputRestaurant
+                    event_name: inputEventName,
+                    event_description: inputEventDescription,
+                    date: inputDate,
+                    guest_limit: inputGuestLimit,
+                    price: inputPrice,
+                    restaurant_id: inputRestaurant
                     },
                 headers: {
                     "token": token

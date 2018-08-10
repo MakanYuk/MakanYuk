@@ -4,6 +4,7 @@ var cookieParser = require("cookie-parser");
 var cors = require("cors");
 require("dotenv").config();
 
+console.log(process.env.MLAB_USER, process.env.MLAB_PASS)
 const mongoose = require("mongoose");
 mongoose.connect(`mongodb://${process.env.MLAB_USER}:${process.env.MLAB_PASS}@ds113692.mlab.com:13692/makanyuk`,{ useNewUrlParser: true });
 
