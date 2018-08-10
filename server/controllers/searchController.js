@@ -29,7 +29,6 @@ const searchRestaurant = (req, res, next) => {
                             }
                         }
                     )
-                    // response.data.restaurants
                 )
             ))
             .catch(err => res.status(500).json(err.message))
