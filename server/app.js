@@ -9,24 +9,24 @@ require('dotenv').config()
 const mongoose = require('mongoose');
 mongoose.connect(`mongodb://${process.env.MLAB_USER}:${process.env.MLAB_PASS}@ds113692.mlab.com:13692/makanyuk`, { useNewUrlParser: true });
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
+let express = require('express');
+let favicon = require('static-favicon');
+let logger = require('morgan');
+let cookieParser = require('cookie-parser');
 
-var app = express();
+let routes = require('./routes/index');
+let users = require('./routes/users');
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+let app = express();
 
 app.use(favicon());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.use('/', routes);
-app.use('/users', users);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
