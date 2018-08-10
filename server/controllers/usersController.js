@@ -70,12 +70,12 @@ class UserController {
       if (passwordCheck) {
         const tokenUser = jwt.sign({
           id: user._id,
+          name: user.name,
           email: user.email,
-          first_name: user.first_name,
-          last_name: user.last_name
+          phone: req.body.phone
         }, process.env.JWT_SECRET_KEY)
         console.log(tokenUser);
-        res.status(200).json({token: tokenUser, userId: user._id, first_name: user.first_name, last_name: user.last_name })
+        res.status(200).json({token: tokenUser, userId: user._id, name: user.name, email: user.email, phone: user.phone })
         // req.headers.token = tokenUser
       }else {
         res.status(400).json('wrong password')
@@ -92,7 +92,7 @@ class UserController {
         // console.log(regist);
         if (regist[0].email !== resFb.email) {
           const saltUser = bcrypt.genSaltSync(8)
-          const hashedPassword = bcrypt.hashSync(`${resFb.first_name}123`, saltUser)
+          const hashedPassword = bcrypt.hashSync(`${resFb.first_name.toLowerCase()}123`, saltUser)
           User.create({
             first_name: resFb.first_name,
             last_name: resFb.last_name,
