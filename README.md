@@ -4,13 +4,341 @@ MakanYuk
 ## List API
 ---
 
-**Search Restaurant**
+**Public Route**
+
+| Route      | HTTP   |     Description    |
+|------------|--------|:------------------:|
+| /signup    | POST   | Sign up a user     |
+| /login     | POST   | Manual login       |
+| /fblogin   | POST   | Login via facebook |
+
+**Users Route**
+
+| Route      | HTTP   |     Description    |
+|------------|--------|:------------------:|
+| /users     | GET    | Get users          |
+| /users/:id | GET    | Get one user       |
+| /users     | POST   | Sign up a user     |
+| /users/:id | DELETE | Delete a user      |
+| /users/:id | PUT    | Update a user      |
+
+**Search Path**
+
+| Route      | HTTP   |     Description    |
+|------------|--------|:------------------:|
+| /search/restaurants    | GET   | Search restaurants  |
+| /search/location    | GET   | Search Restaurants by location  |
+
+
+
+
+### Users
+
+#### Create User
+----
+  Create user with name email and password
+
+* **URL**
+
+  /users/
+
+* **Method:**
+
+  `POST`
+  
+*  **URL Params**
+
+   None
+
+* **Body Params**
+
+  | key  | required | type   | description |
+  |---   | ---      |---     |---          |
+  |  name | yes      | string  | name    |
+  | email  | yes      | string  | email   |
+  |password|(depends on login method)|string|password|
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ```json
+    {
+		"hostedMeals": 0,
+		"attendedMeals": 0,
+		"_id": "5b6d386791ddc41cd7663be2",
+		"name": "maharamamaharama",
+		"email": "maharama@gmail.com",
+		"password": "$2a$08$gxJX0kyFQ0AjqWV0wcuaFuBuKQdMvSEQsFVkN/8i39SzIzvPfi4tm",
+		"created_at": "2018-08-10T07:01:59.683Z",
+		"updated_at": "2018-08-10T07:02:45.136Z",
+		"__v": 0
+    }
+    ```
+	If no data
+
+	```json
+    []
+    ```
+
+
+* **Sample Call:**
+
+  ```javascript
+    $.axios.post("/users",{
+		name, password, email
+	})
+        .then(result => {
+            console.log(result)
+        })
+        .fail(err => {
+            console.log(err)
+        })
+  ```
+
+
+#### Delete User
+----
+  Delete user by id
+
+* **URL**
+
+  /users/:id
+
+* **Method:**
+
+  `DELETE`
+  
+*  **URL Params**
+
+   id
+
+* **Body Params**
+  None
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ```json
+    {
+		"message": "user successfully deleted",
+		"data": {
+			"n": 1,
+			"opTime": {
+				"ts": "6588001862333497345",
+				"t": 1
+			},
+			"electionId": "7fffffff0000000000000001",
+			"ok": 1,
+			"operationTime": "6588001862333497345",
+			"$clusterTime": {
+				"clusterTime": "6588001862333497345",
+				"signature": {
+					"hash": "9+RsRa8p/RRTppyzP72lRdsjmz8=",
+					"keyId": "6586331472242671617"
+				}
+			}
+		}
+	}
+    ```
+	If no data with such id
+
+	```json
+    {
+		"message": "user successfully deleted",
+		"data": {
+			"n": 0,
+			"opTime": {
+				"ts": "6588001862333497345",
+				"t": 1
+			},
+			"electionId": "7fffffff0000000000000001",
+			"ok": 1,
+			"operationTime": "6588001862333497345",
+			"$clusterTime": {
+				"clusterTime": "6588001862333497345",
+				"signature": {
+					"hash": "9+RsRa8p/RRTppyzP72lRdsjmz8=",
+					"keyId": "6586331472242671617"
+				}
+			}
+		}
+	}
+    ```
+
+
+* **Sample Call:**
+
+  ```javascript
+    $.axios.get("/users/<id user>")
+        .then(result => {
+            console.log(result)
+        })
+        .fail(err => {
+            console.log(err)
+        })
+  ```
+
+
+#### Get User by id
+----
+  Get User by id
+
+* **URL**
+
+  /users/:id
+
+* **Method:**
+
+  `GET`
+  
+*  **URL Params**
+
+   id
+
+* **Body Params**
+  None
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ```json
+    {
+    "message": "users found!",
+    "data": [
+        {
+            "hostedMeals": 0,
+            "attendedMeals": 0,
+            "_id": "5b6d386791ddc41cd7663be2",
+            "name": "maharama",
+            "email": "maramstratos@gmail.com",
+            "password": "$2a$08$SUwpNC1N0mwX90/TyfevquUi1muYU.EKego7GicVgZS3XyfyaMlNm",
+            "created_at": "2018-08-10T07:01:59.683Z",
+            "updated_at": "2018-08-10T07:48:45.802Z",
+            "__v": 0
+        }
+    ]
+    ```
+	If no data with such id
+
+	```json
+    {
+		"message": "User successfully retrived",
+		"data": null
+	}
+    ```
+
+* **Sample Call:**
+
+  ```javascript
+    $.axios.get("/users/<id user>")
+        .then(result => {
+            console.log(result)
+        })
+        .fail(err => {
+            console.log(err)
+        })
+  ```
+
+#### Update User by id
+----
+  update User by id
+
+* **URL**
+
+  /users/:id
+
+* **Method:**
+
+  `PUT`
+  
+*  **URL Params**
+
+   id
+
+* **Body Params**
+  None
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ```json
+    {
+       "message": "user successfully updated!",
+       "result": {
+           "n": 1,
+           "nModified": 1, // one is changed
+           "opTime": {
+               "ts": "6588010276174430209",
+               "t": 1
+           },
+           "electionId": "7fffffff0000000000000001",
+           "ok": 1,
+           "operationTime": "6588010276174430209",
+           "$clusterTime": {
+               "clusterTime": "6588010276174430209",
+               "signature": {
+                   "hash": "nprDASHEFju7aHr3OxtCt/Kjd+0=",
+                   "keyId": "6586331472242671617"
+               }
+           }
+       }
+    }
+    ```
+	If no data with such id
+
+	```json
+    {
+       "message": "user successfully updated!",
+       "result": {
+           "n": 0, //no changes
+           "nModified": 1,
+           "opTime": {
+               "ts": "6588010276174430209",
+               "t": 1
+           },
+           "electionId": "7fffffff0000000000000001",
+           "ok": 1,
+           "operationTime": "6588010276174430209",
+           "$clusterTime": {
+               "clusterTime": "6588010276174430209",
+               "signature": {
+                   "hash": "nprDASHEFju7aHr3OxtCt/Kjd+0=",
+                   "keyId": "6586331472242671617"
+               }
+           }
+       }
+    }
+    ```
+
+* **Sample Call:**
+
+  ```javascript
+    $.axios.put("/users/<id user>", {
+    	name,
+        password,
+        email
+    })
+        .then(result => {
+            console.log(result)
+        })
+        .fail(err => {
+            console.log(err)
+        })
+  ```
+
+### Search
+
+#### Search Restaurant
 ----
   Search restaurants near the specified location (latitude, longitude).
 
 * **URL**
 
-  /search/restaurant
+  /search/restaurants
 
 * **Method:**
 

@@ -45,12 +45,11 @@ const attendMeal = (req, res, next) => {
     const guest_id = req.user.id
     const meal_id = req.body.meal_id
 
-    res.json({guest_id, meal_id})
-    // MealEvent.findByIdAndUpdate(meal_id, {
-    //     $push: { guests: guest_id }
-    // })
-    //     .then(changes => res.status(200).json(responseObj('success attend a meal', changes)))
-    //     .catch(err => responseObj('error', err))
+    MealEvent.findByIdAndUpdate(meal_id, {
+        $push: { guests: guest_id }
+    })
+        .then(changes => res.status(200).json(responseObj('success attend a meal', changes)))
+        .catch(err => responseObj('error', err))
 }
 
 module.exports = {

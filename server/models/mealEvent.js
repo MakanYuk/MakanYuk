@@ -25,15 +25,11 @@ const mealEventSchema = new Schema({
         type: [{ type: Schema.Types.ObjectId, ref: 'User' }],
         validate: {
             validator: function (value) {
-                return this.guest_limit <= value.length
+                return this.guest_limit > value.length
             },
             message: `exceeds the limit`
         }
     }
 })
-
-const guestLimitValidator = function (value) {
-    return this.guest_limit > value.length
-}
 
 module.exports = mongoose.model('MealEvent', mealEventSchema)

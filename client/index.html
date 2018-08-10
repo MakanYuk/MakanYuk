@@ -2,10 +2,9 @@
 <html>
     <head>
         <title>MakanYuk</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
         <link rel="stylesheet" href="./lib/landing.css">
         <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script type="text/javascript" src="./lib/index.js"></script>
     </head>
@@ -39,13 +38,22 @@
 
                                 //kita akses /signin/facebook dan kirim ke authResponse
                                 axios.post("http://localhost:3000/fblogin", response.authResponse)
-                             
-                                .then(result=>{ 
-                                  let token = result.data.token //ini token yg uda kita generate di server
-                                  localStorage.setItem('token', token)
-                                  //token ini bt kasi user akses ke api kita 
+                                    .then(result=>{ 
+                                    let token = result.data.token //ini token yg uda kita generate di server
+                                    localStorage.setItem('token', token)
+                                     //token ini bt kasi user akses ke api kita 
                                 })
                                 .catch(err=>{console.log(err)})
+
+                                 axios.post("http://localhost:3000/signup", response.authResponse)
+                                    .then(result=>{ 
+                                    let token = result.data.token //ini token yg uda kita generate di server
+                                    localStorage.setItem('token', token)
+                                     //token ini bt kasi user akses ke api kita 
+                                })
+                                .catch(err=>{console.log(err)})
+
+                                
                             }   
                         });
                     }
@@ -60,7 +68,7 @@
                             <a class="nav-link " id="invitations-tab" data-toggle="tab" href="#invitations" role="tab" aria-controls="invitations" aria-selected="false">Let's Eat!</a>
                         </li>
                         <li class="nav-item">
-                                <a class="nav-link " id="host-tab" data-toggle="tab" href="#host" role="tab" aria-controls="host" aria-selected="true">Be a Host</a>
+                                <a class="nav-link " id="host-tab" data-toggle="tab" href="#host" role="tab" aria-controls="host" aria-selected="false">Be a Host</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link " id="signup-tab" data-toggle="tab" href="#signup" role="tab" aria-controls="signup" aria-selected="false">Sign Up</a>
@@ -72,7 +80,37 @@
                     <br>
                     <!-- Tab panes -->
                     <div class="tab-content">
-                        <div class="tab-pane" id="invitations" role="tabpanel" aria-labelledby="invitations-tab">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Esse assumenda cupiditate provident suscipit id, sequi error ducimus odit, optio alias maxime hic laboriosam culpa et eum ratione fugiat. Quidem, quod.</div>
+                        <div class="tab-pane" id="invitations" role="tabpanel" aria-labelledby="invitations-tab">
+                                <div class="row">
+                                        <div class="col-md-4">
+                                                <div class="card mb-4 box-shadow">
+                                                        <img src="https://ichef.bbci.co.uk/food/ic/food_16x9_832/recipes/alpine_pizza_32132_16x9.jpg" width="320" height="200">
+                                                      <div class="card-body">
+                                                        <h3>
+                                                            <p id="event_name">Pizza Party</p>
+                                                        </h3>
+                                                        <div tabindex="0" aria-label="Rated" data-res-id="18597282" class="rating-for-18597282 rating-div rrw-aggregate level-8">
+                                                            Rating: 4.6<span>/5</span><br><br>
+                                                            <div>
+                                                                <img src="./img/profile.png" width="30" alt="img_profile" style="border-radius: 50%">
+                                                                    <span id="name">John Doe</span>
+                                                            </div><br>
+                                                            <span id="event_location">1 5th Avenue, New York, NY 10003</span>
+                                                        </div><br>
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <div class="btn-group">
+                                                                 <!-- Button trigger modal -->
+                                                                    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalDetail">
+                                                                            Detail
+                                                                    </button>
+                                                            </div>
+                                                            <small class="text-muted">9 mins</small>
+                                                        </div>
+                                                      </div>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
                         <div class="tab-pane" id="host" role="tabpanel" aria-labelledby="host-tab">
                                 <div class="container">
                                     <form class="form-signin">
@@ -103,11 +141,8 @@
                                         <div class="form-group">
                                                 <label for="inputRestaurant" class="labelName">Pick your venue</label>
                                                 <select class="form-control" id="inputRestaurant" required>
-                                                  <option>1</option>
-                                                  <option>2</option>
-                                                  <option>3</option>
-                                                  <option>4</option>
-                                                  <option>5</option>
+                                                  
+                                                  
                                                 </select>
                                               </div>
                                         <div class="form-group">
@@ -118,7 +153,7 @@
                         </div>
                         <div class="tab-pane" id="signup" role="tabpanel" aria-labelledby="signup-tab">
                                 <div class="container">
-                                    <fb:login-button size="xlarge" scope="public_profile,email" onlogin="checkLoginState();">Sign Up with Facebook</fb:login-button>
+                                    <fb:login-button size="xlarge" scope="public_profile,email" onlogin="checkLoginState()">Sign Up with Facebook</fb:login-button>
                                     <p class="logInfo"> or join with email</p>
                                     <form class="form-signin">
                                         <div class="form-group">
@@ -166,6 +201,47 @@
                </div>
         </div>
         
+        <!-- Modal Detail -->
+        <div class="modal fade" id="modalDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <div class="container-fluid">
+                          <h4 class="modal-title" id="event_name" name="event_name">Pizza Party</h4><span id="price_guest">$15 per Guest</span>
+                      </div>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Description :</label>
+                            <p id="description" name="description">We don´t want to just offer a well-prepared meal. We want this day to be an unforgettable night. For this, in addition to the dishes, we offer a soundtrack of Brazilian songs, we will show a documentary about Brazilian music and culture and invite all those present, before or after dinner, to go to our dance hall to burn the calories lintening to and dancing Brazilian music of the highest quality.</p>
+                        </div>
+                        <div class="form-group">
+                          Date :
+                          <input size="16" type="text" value="2012-06-15 14:45" readonly class="form-control form_datetime">
+                          <script type="text/javascript">
+                              $(".form_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii'});
+                          </script>  
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Limited To :</label>
+                            <input class="form-control" id="current_guest" name="current_guest" size="7" width="50%" style="cursor:pointer;cursor:hand;" type="text" readonly value="10">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Current Guest :</label>
+                            <input class="form-control" id="current_guest" name="current_guest" size="7" width="50%" style="cursor:pointer;cursor:hand;" type="text" readonly value="5">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" id="attend" class="btn btn-dark">Attend</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
         <ul class="slideshow">
             <li></li>
             <li></li>
@@ -173,6 +249,7 @@
             <li></li>
             <li></li>
         </ul>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     </body>
 </html>
