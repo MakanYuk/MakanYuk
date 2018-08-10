@@ -171,7 +171,7 @@ MakanYuk
 * **Sample Call:**
 
   ```javascript
-    $.axios.delete("/users/<id user>")
+    $.axios.get("/users/<id user>")
         .then(result => {
             console.log(result)
         })
@@ -233,7 +233,95 @@ MakanYuk
 * **Sample Call:**
 
   ```javascript
-    $.axios.delete("/users/<id user>")
+    $.axios.get("/users/<id user>")
+        .then(result => {
+            console.log(result)
+        })
+        .fail(err => {
+            console.log(err)
+        })
+  ```
+
+#### Update User by id
+----
+  update User by id
+
+* **URL**
+
+  /users/:id
+
+* **Method:**
+
+  `PUT`
+  
+*  **URL Params**
+
+   id
+
+* **Body Params**
+  None
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ```json
+    {
+       "message": "user successfully updated!",
+       "result": {
+           "n": 1,
+           "nModified": 1, // one is changed
+           "opTime": {
+               "ts": "6588010276174430209",
+               "t": 1
+           },
+           "electionId": "7fffffff0000000000000001",
+           "ok": 1,
+           "operationTime": "6588010276174430209",
+           "$clusterTime": {
+               "clusterTime": "6588010276174430209",
+               "signature": {
+                   "hash": "nprDASHEFju7aHr3OxtCt/Kjd+0=",
+                   "keyId": "6586331472242671617"
+               }
+           }
+       }
+    }
+    ```
+	If no data with such id
+
+	```json
+    {
+       "message": "user successfully updated!",
+       "result": {
+           "n": 0, //no changes
+           "nModified": 1,
+           "opTime": {
+               "ts": "6588010276174430209",
+               "t": 1
+           },
+           "electionId": "7fffffff0000000000000001",
+           "ok": 1,
+           "operationTime": "6588010276174430209",
+           "$clusterTime": {
+               "clusterTime": "6588010276174430209",
+               "signature": {
+                   "hash": "nprDASHEFju7aHr3OxtCt/Kjd+0=",
+                   "keyId": "6586331472242671617"
+               }
+           }
+       }
+    }
+    ```
+
+* **Sample Call:**
+
+  ```javascript
+    $.axios.put("/users/<id user>", {
+    	name,
+        password,
+        email
+    })
         .then(result => {
             console.log(result)
         })
