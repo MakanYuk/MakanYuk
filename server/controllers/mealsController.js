@@ -1,5 +1,3 @@
-const axios = require('axios')
-
 const Restaurant = require('../models/restaurant')
 const MealEvent = require('../models/mealEvent')
 const { responseObj } = require('../helpers/response')
