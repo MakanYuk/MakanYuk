@@ -10,8 +10,7 @@ class UserController {
     User.create({
       name: req.body.name,
       email: req.body.email,
-      password: hashedPassword,
-      salt: saltUser
+      password: hashedPassword
     })
     .then(user=>{
       const tokenUser = jwt.sign({
@@ -57,8 +56,7 @@ class UserController {
     User.updateOne({ _id: req.params.id }, {
       name: req.body.name,
       email: req.body.email,
-      password: hashedPassword,
-      salt: saltUser
+      password: hashedPassword
     })
     .then(result=>{
       res.status(200).json({message: 'user successfully updated!', result})
@@ -79,8 +77,8 @@ class UserController {
           name: user.name,
           email: user.email
         }, process.env.JWT_SECRET_KEY)
-        console.log(tokenUser);
-        res.status(200).json({token: tokenUser, userId: user._id, name: user.name, email: user.email, phone: user.phone })
+        // console.log(tokenUser);
+        res.status(200).json({token: tokenUser, userId: user._id, name: user.name, email: user.email })
         // req.headers.token = tokenUser
       }else {
         res.status(400).json({message: 'wrong password'})
@@ -102,18 +100,17 @@ class UserController {
           User.create({
             name: resFb.name,
             email: resFb.email,
-            password: hashedPassword,
-            salt: saltUser
+            password: hashedPassword
           })
           .then(user=>{
-            console.log('ini promise', user);
+            // console.log('ini promise', user);
             const tokenUser = jwt.sign({
               id: user._id,
               email: user.email,
               name: user.name
             }, process.env.JWT_SECRET_KEY)
             // console.log(tokenUser);
-            let data = { token: tokenUser, userId: user._id, name: user.name, email: user.email, phone: user.phone }
+            let data = { token: tokenUser, userId: user._id, name: user.name, email: user.email }
             res.status(200).json({message: "fb login successful!", data})
           })
           .catch(err=>{

@@ -9,5 +9,4 @@ router.post('/', usersController.registerUser);
 router.delete('/:id', usersController.deleteUser);
 router.put('/:id', usersController.updateUser);
 
-// router.delete('/:id', Authentication.authenticationRead, Authorization.authorizationAdmin, usersController.deleteUser);
 module.exports = router;
