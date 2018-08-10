@@ -45,12 +45,14 @@ $(document).ready(function(){
         let inputLocation = $("#inputLocation").val();
         axios.get(`${base_url}/search/location?q=${inputLocation}`)
             .then(function(response){
-                axios.get(`${base_url}/search/restaurants?location=${response.locationId}`)
-                    .then(restaurants)
-                        $.each(restaurants,function(){
-                            $( "#inputRestaurant").append( `<option>${this.name}, at <span>${this.address}</span></option>` );
+                console.log(response)
+                axios.get(`${base_url}/search/restaurants?location=${response.data.data.locationId}`)
+                    .then(result)
+                        
+                        $.each(result.data.data,function(){
+                            $( "#inputRestaurant").append( `<option value="${this.id}">${this.name}, at <span>${this.address}</span></option>` );
                         }); 
-            })
+            }
             .catch(function (error) {
                 console.log(error);
             });
