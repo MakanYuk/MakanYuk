@@ -105,7 +105,7 @@ class UserController {
     })
   }
   static fbLogin(req, res){
-    FB.api('me', { fields: ['id', 'name', 'email', 'first_name'], access_token: `${req.headers.token}` }, function (resFb) {
+    FB.api('me', { fields: ['id', 'name', 'email', 'first_name'], access_token: `${req.body.accessToken}` }, function (resFb) {
       // console.log('resfb------>',resFb);
       User.findOne({ email: resFb.email })
       .then(regist=>{
