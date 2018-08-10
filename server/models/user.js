@@ -11,10 +11,6 @@ var userSchema = new Schema({
     unique: true,
     require: true
   },
-  phone: {
-    type: String,
-    require: true
-  },
   hostedMeals: {
     type: Number,
     default: 0
