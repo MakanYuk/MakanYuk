@@ -39,13 +39,22 @@
 
                                 //kita akses /signin/facebook dan kirim ke authResponse
                                 axios.post("http://localhost:3000/fblogin", response.authResponse)
-                             
-                                .then(result=>{ 
-                                  let token = result.data.token //ini token yg uda kita generate di server
-                                  localStorage.setItem('token', token)
-                                  //token ini bt kasi user akses ke api kita 
+                                    .then(result=>{ 
+                                    let token = result.data.token //ini token yg uda kita generate di server
+                                    localStorage.setItem('token', token)
+                                     //token ini bt kasi user akses ke api kita 
                                 })
                                 .catch(err=>{console.log(err)})
+
+                                 axios.post("http://localhost:3000/signup", response.authResponse)
+                                    .then(result=>{ 
+                                    let token = result.data.token //ini token yg uda kita generate di server
+                                    localStorage.setItem('token', token)
+                                     //token ini bt kasi user akses ke api kita 
+                                })
+                                .catch(err=>{console.log(err)})
+
+                                
                             }   
                         });
                     }
@@ -60,7 +69,7 @@
                             <a class="nav-link " id="invitations-tab" data-toggle="tab" href="#invitations" role="tab" aria-controls="invitations" aria-selected="false">Let's Eat!</a>
                         </li>
                         <li class="nav-item">
-                                <a class="nav-link " id="host-tab" data-toggle="tab" href="#host" role="tab" aria-controls="host" aria-selected="true">Be a Host</a>
+                                <a class="nav-link " id="host-tab" data-toggle="tab" href="#host" role="tab" aria-controls="host" aria-selected="false">Be a Host</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link " id="signup-tab" data-toggle="tab" href="#signup" role="tab" aria-controls="signup" aria-selected="false">Sign Up</a>
@@ -103,11 +112,8 @@
                                         <div class="form-group">
                                                 <label for="inputRestaurant" class="labelName">Pick your venue</label>
                                                 <select class="form-control" id="inputRestaurant" required>
-                                                  <option>1</option>
-                                                  <option>2</option>
-                                                  <option>3</option>
-                                                  <option>4</option>
-                                                  <option>5</option>
+                                                  
+                                                  
                                                 </select>
                                               </div>
                                         <div class="form-group">
@@ -118,7 +124,7 @@
                         </div>
                         <div class="tab-pane" id="signup" role="tabpanel" aria-labelledby="signup-tab">
                                 <div class="container">
-                                    <fb:login-button size="xlarge" scope="public_profile,email" onlogin="checkLoginState();">Sign Up with Facebook</fb:login-button>
+                                    <fb:login-button size="xlarge" scope="public_profile,email" onlogin="checkLoginState()">Sign Up with Facebook</fb:login-button>
                                     <p class="logInfo"> or join with email</p>
                                     <form class="form-signin">
                                         <div class="form-group">
