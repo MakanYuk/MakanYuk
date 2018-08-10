@@ -3,7 +3,9 @@ const MealEvent = require('../models/mealEvent')
 const { responseObj } = require('../helpers/response')
 
 const getMealEvents = (req, res, next) => {
-    MealEvent.find()
+    MealEvent
+        .find()
+        .populate('host')
         .then(mealEvents => res.status(200).json(responseObj('success get meal events', mealEvents)))
         .catch(res.status(500).json(responseObj('failed get meal events', err)))
 }
@@ -11,8 +13,8 @@ const getMealEvents = (req, res, next) => {
 const getHostedMeals = (req, res, next) => {
     const host = req.user.id
     MealEvent.find({ host })
-    .then(mealEvents => res.status(200).json(responseObj('success get hosted meals', mealEvents)))
-    .catch(res.status(500).json(responseObj('failed get hosted meals', err)))
+        .then(mealEvents => res.status(200).json(responseObj('success get hosted meals', mealEvents)))
+        .catch(res.status(500).json(responseObj('failed get hosted meals', err)))
 }
 
 const hostMeal = (req, res, next) => {
@@ -38,8 +40,22 @@ const hostMeal = (req, res, next) => {
         })
 }
 
+const attendMeal = (req, res, next) => {
+
+    const guest_id = req.user.id
+    const meal_id = req.body.meal_id
+
+    res.json({guest_id, meal_id})
+    // MealEvent.findByIdAndUpdate(meal_id, {
+    //     $push: { guests: guest_id }
+    // })
+    //     .then(changes => res.status(200).json(responseObj('success attend a meal', changes)))
+    //     .catch(err => responseObj('error', err))
+}
+
 module.exports = {
     getMealEvents,
     getHostedMeals,
-    hostMeal
+    hostMeal,
+    attendMeal
 }

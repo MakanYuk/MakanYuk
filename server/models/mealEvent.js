@@ -2,9 +2,9 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const mealEventSchema = new Schema({
-    host: { 
-        type: Schema.Types.ObjectId, 
-        ref: 'User' 
+    host: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     },
     event_name: {
         type: String,
@@ -21,7 +21,19 @@ const mealEventSchema = new Schema({
         default: 1
     },
     price: Number,
-    guests: [{ type: Schema.Types.ObjectId, ref: 'User' }]
+    guests: {
+        type: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+        validate: {
+            validator: function (value) {
+                return this.guest_limit <= value.length
+            },
+            message: `exceeds the limit`
+        }
+    }
 })
+
+const guestLimitValidator = function (value) {
+    return this.guest_limit > value.length
+}
 
 module.exports = mongoose.model('MealEvent', mealEventSchema)
