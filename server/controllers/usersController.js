@@ -6,7 +6,7 @@ var FB = require('fb')
 class UserController {
   static registerUser(req, res){
     // console.log(req.body);
-    if (req.body.password === undefined) {
+    if (req.body.password === undefined || req.body.password.length === 0) {
       res.status(400).json({message: 'password is required'})
     }
     const saltUser = bcrypt.genSaltSync(8)
@@ -64,7 +64,7 @@ class UserController {
     })
   }
   static updateUser(req, res){
-    if (req.body.password === undefined) {
+    if (req.body.password === undefined || req.body.password.length === 0) {
       res.status(400).json({message: 'password is required to update'})
     }
     const saltUser = bcrypt.genSaltSync(8)
@@ -116,7 +116,7 @@ class UserController {
           User.create({
             name: resFb.name,
             email: resFb.email,
-            password: hashedPasswordg
+            password: hashedPassword
           })
           .then(user=>{
             // console.log('ini promise', user);
