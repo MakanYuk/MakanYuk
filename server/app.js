@@ -5,16 +5,13 @@ var cors = require("cors");
 require("dotenv").config();
 
 const mongoose = require("mongoose");
-mongoose.connect(
-	`mongodb://${process.env.MLAB_USER}:${
-		process.env.MLAB_PASS
-	}@ds113692.mlab.com:13692/makanyuk`,
-	{ useNewUrlParser: true }
-);
+mongoose.connect(`mongodb://${process.env.MLAB_USER}:${process.env.MLAB_PASS}@ds113692.mlab.com:13692/makanyuk`,{ useNewUrlParser: true });
 
 let routes = require("./routes/index");
 
 let app = express();
+
+app.use(cors())
 
 app.use(logger("dev"));
 app.use(express.json());
