@@ -1,9 +1,12 @@
 const router = require('express').Router()
 
-const { hostMeal } = require('../controllers/mealsController')
+const { getHostedMeals, hostMeal } = require('../controllers/mealsController')
 
-const { isAuthenticated } = require('../helpers/authHelper')
+const { auth } = require('../helpers/authHelper')
 
-router.post('/', isAuthenticated(), hostMeal)
+const isAuthenticated = auth()
+
+router.get('/', isAuthenticated, getHostedMeals)
+router.post('/', isAuthenticated, hostMeal)
 
 module.exports = router

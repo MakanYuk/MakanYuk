@@ -10,7 +10,7 @@ const mealEventSchema = new Schema({
         type: String,
         required: [true, `event name is required`]
     },
-    description: String,
+    event_description: String,
     restaurant: Object,
     date: {
         type: Date,
@@ -18,14 +18,9 @@ const mealEventSchema = new Schema({
     },
     guest_limit: {
         type: Number,
-        default: 1,
-        validate: {
-            validator: function(value) {
-                return this.guests.length > value
-            },
-            message: `number of guests exceeds the limit`
-        }
+        default: 1
     },
+    price: Number,
     guests: [{ type: Schema.Types.ObjectId, ref: 'User' }]
 })
 
