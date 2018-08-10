@@ -1,27 +1,27 @@
-var express = require('express');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var cors = require('cors')
-require('dotenv').config()
+var express = require("express");
+var logger = require("morgan");
+var cookieParser = require("cookie-parser");
+var cors = require("cors");
+require("dotenv").config();
 
-const mongoose = require('mongoose');
-mongoose.connect(`mongodb://${process.env.MLAB_USER}:${process.env.MLAB_PASS}@ds113692.mlab.com:13692/makanyuk`, { useNewUrlParser: true });
+const mongoose = require("mongoose");
+mongoose.connect(
+	`mongodb://${process.env.MLAB_USER}:${
+		process.env.MLAB_PASS
+	}@ds113692.mlab.com:13692/makanyuk`,
+	{ useNewUrlParser: true }
+);
 
-let express = require('express');
-let logger = require('morgan');
-let cookieParser = require('cookie-parser');
-
-let routes = require('./routes/index');
+let routes = require("./routes/index");
 
 let app = express();
 
-app.use(logger('dev'));
+app.use(logger("dev"));
 app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-
-app.use('/', routes);
+app.use("/", routes);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
@@ -32,13 +32,8 @@ app.use(function(req, res, next) {
 
 /// error handlers
 
-// development error handler
-// will print stacktrace
-}
-
 // production error handler
 // no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-});
+app.use(function(err, req, res, next) {});
 
 module.exports = app;
