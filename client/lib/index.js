@@ -48,7 +48,6 @@ $(document).ready(function(){
                 console.log(response)
                 axios.get(`${base_url}/search/restaurants?location=${response.data.data.locationId}`)
                     .then(result)
-                        
                         $.each(result.data.data,function(){
                             $( "#inputRestaurant").append( `<option value="${this.id}">${this.name}, at <span>${this.address}</span></option>` );
                         }); 
