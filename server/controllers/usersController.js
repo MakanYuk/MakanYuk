@@ -5,6 +5,10 @@ var FB = require('fb')
 
 class UserController {
   static registerUser(req, res){
+    // console.log(req.body);
+    if (req.body.password === undefined || req.body.password.length === 0) {
+      res.status(400).json({message: 'password is required'})
+    }
     const saltUser = bcrypt.genSaltSync(8)
     const hashedPassword = bcrypt.hashSync(req.body.password, saltUser)
     User.create({
@@ -27,8 +31,17 @@ class UserController {
     })
   }
   static getUsers(req, res){
-    User.find({},function(err, users){
-      res.status(200).json(users)
+    User.find({})
+    .then(users=>{
+      // console.log(users);
+      if (users.length === 0) {
+        res.status(404).json({message: 'no users found!',data: users})
+      }else {
+        res.status(200).json({message: 'users found!',data: users})
+      }
+    })
+    .catch(err=>{
+      res.status(400).json({message: 'something went wrong!', err})
     })
   }
   static getOneUser(req, res){
@@ -44,13 +57,16 @@ class UserController {
   static deleteUser(req, res){
     User.deleteOne({ _id: req.params.id })
     .then(result=>{
-      res.status(200).json({message: 'user successfully deleted'})
+      res.status(200).json({message: 'user successfully deleted', data: result})
     })
     .catch(err=>{
       res.status(400).json({message: 'something went wrong!', err})
     })
   }
   static updateUser(req, res){
+    if (req.body.password === undefined || req.body.password.length === 0) {
+      res.status(400).json({message: 'password is required to update'})
+    }
     const saltUser = bcrypt.genSaltSync(8)
     const hashedPassword = bcrypt.hashSync(req.body.password, saltUser)
     User.updateOne({ _id: req.params.id }, {
@@ -85,11 +101,11 @@ class UserController {
       }
     })
     .catch(err=>{
-      res.status(400).json({message: 'email is not found'})
+      res.status(400).json({message: 'email is not found', err})
     })
   }
   static fbLogin(req, res){
-    FB.api('me', { fields: ['id', 'name', 'email', 'first_name', 'last_name'], access_token: `${req.headers.token}` }, function (resFb) {
+    FB.api('me', { fields: ['id', 'name', 'email', 'first_name'], access_token: `${req.headers.token}` }, function (resFb) {
       // console.log('resfb------>',resFb);
       User.findOne({ email: resFb.email })
       .then(regist=>{

@@ -4,12 +4,12 @@ const Schema = mongoose.Schema;
 var userSchema = new Schema({
   name: {
     type: String,
-    require: true
+    required: [true, 'name is required']
   },
   email: {
     type: String,
     unique: true,
-    require: true
+    required: [true, 'email is required']
   },
   hostedMeals: {
     type: Number,
@@ -19,7 +19,10 @@ var userSchema = new Schema({
     type: Number,
     default: 0
   },
-  password: String
+  password: {
+    type: String,
+    required: [true, 'password is required']
+  }
 },{
   timestamps: {
     createdAt: 'created_at',
