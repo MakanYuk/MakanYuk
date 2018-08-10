@@ -12,7 +12,7 @@ $(document).ready(function(){
            password
         })
         .then(function (response) {
-            let token = response.data.token //ini token yg uda kita generate di server
+            let token = response.data.data.token //ini token yg uda kita generate di server
             localStorage.setItem('token', token)
         })
         .catch(function (error) {
@@ -32,7 +32,7 @@ $(document).ready(function(){
             password
          })
          .then(function (response) {
-            let token = response.data.token //ini token yg uda kita generate di server
+            let token = response.data.data.token //ini token yg uda kita generate di server
             localStorage.setItem('token', token)
          })
          .catch(function (error) {

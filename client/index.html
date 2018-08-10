@@ -39,7 +39,7 @@
                                 //kita akses /signin/facebook dan kirim ke authResponse
                                 axios.post("http://localhost:3000/fblogin", response.authResponse)
                                     .then(result=>{ 
-                                    let token = result.data.token //ini token yg uda kita generate di server
+                                    let token = result.data.data.token //ini token yg uda kita generate di server
                                     localStorage.setItem('token', token)
                                      //token ini bt kasi user akses ke api kita 
                                 })
